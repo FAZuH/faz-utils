@@ -23,7 +23,8 @@ Issues = "https://github.com/FAZuH/faz-utils/issues"
 Documentation = "https://github.com/FAZuH/faz-utils#readme"
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/faz"]
+only-packages = true
+packages = ["src/faz", "tests/"]
 
 [tool.hatch.version]
 path = "src/faz/utils/__about__.py"
@@ -33,10 +34,10 @@ extra-dependencies = [
   "mypy>=1.0.0",
 ]
 [tool.hatch.envs.types.scripts]
-check = "mypy --install-types --non-interactive {args:src/tmp tests}"
+check = "mypy --install-types --non-interactive {args:src/faz tests}"
 
 [tool.coverage.run]
-source_pkgs = ["tmp", "tests"]
+source_pkgs = ["src/faz", "tests"]
 branch = true
 parallel = true
 omit = [
@@ -44,7 +45,7 @@ omit = [
 ]
 
 [tool.coverage.paths]
-faz-utils = ["src/faz"]
+faz-utils = ["src/faz/utils"]
 tests = ["tests"]
 
 [tool.coverage.report]
