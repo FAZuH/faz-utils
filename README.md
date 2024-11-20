@@ -13,9 +13,9 @@
 ## Installation
 
 ```console
-pip install tmp
+pip install faz-utils
 ```
 
 ## License
 
-`tmp` is distributed under the terms of the [MIT](https://spdx.org/licenses/MIT.html) license.
+`faz-utils` is distributed under the terms of the [MIT](https://spdx.org/licenses/MIT.html) license.
