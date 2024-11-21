@@ -3,6 +3,7 @@ def test_source_path():
     from faz.utils.cache_util import CacheUtil
 
     cache = CacheUtil()
+
     @cache.decorator
     def foo():
         return None
