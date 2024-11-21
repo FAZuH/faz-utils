@@ -30,9 +30,9 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version-file: ".python-version"
+          python-version-file: "pyproject.toml"
 
-      - name: Install the project
+      - name: Install the Project
         run: uv sync --all-extras --dev
 
       - name: Format with Ruff and Black
@@ -47,5 +47,5 @@ jobs:
           commit_user_email: "fazuhhh@proton.me"
           commit_message: "ci: ruff and black formatting"
 
-      - name: Run tests
+      - name: Run Tests
         run: uv run pytest --cache-clear tests/
