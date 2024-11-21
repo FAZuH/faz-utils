@@ -1,7 +1,4 @@
-# tmp
-
-[![PyPI - Version](https://img.shields.io/pypi/v/tmp.svg)](https://pypi.org/project/tmp)
-[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/tmp.svg)](https://pypi.org/project/tmp)
+# faz-utils
 
 -----
 

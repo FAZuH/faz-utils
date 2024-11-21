@@ -35,6 +35,9 @@ jobs:
       - name: Set Up version.json
         run: echo "{"version":$(git describe --tags --abbrev=0)}" > version.json
 
+      - name: Bump Version on pyproject.toml
+        run: sed -i "s/version = .*/version = \"$(git describe --tags --abbrev=0)\"/g" pyproject.toml
+
       - name: Create Changelog
         id: changelog
         uses: TriPSs/conventional-changelog-action@v5.2.1
