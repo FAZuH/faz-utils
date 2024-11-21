@@ -37,7 +37,7 @@ packages = ["src/faz", "tests"]
 
 [tool.black]
 line-length = 88
-target-version = ""
+target-version = ["py313"]
 
 [tool.ruff]
 exclude = [
@@ -70,7 +70,7 @@ exclude = [
 ]
 line-length = 88
 indent-width = 4
-target-version = ""
+target-version = "py313"
 
 [tool.ruff.lint]
 select = ["E4", "E7", "E9", "F"]
