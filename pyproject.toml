@@ -2,7 +2,11 @@
 name = "faz-utils"
 # On the release branches, this string will be automatically updated by the bots
 # Do not change this in the main branch!
-version = "0.1.0"
+
+
+version = "0.1.1"
+
+
 description = "Utility modules for faz projects"
 readme = "README.md"
 license = {file = "LICENSE"}
