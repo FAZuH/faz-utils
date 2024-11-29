@@ -24,26 +24,38 @@ Source = "https://github.com/FAZuH/faz-utils"
 Issues = "https://github.com/FAZuH/faz-utils/issues"
 Documentation = "https://github.com/FAZuH/faz-utils#readme"
 
+[tool.setuptools.packages.find]
+where = [ "src" ]
+include = [ "faz.utils*" ]
+
+# Common
 [dependency-groups]
 dev = [
+    "alembic>=1.14.0",
     "black>=24.10.0",
     "pytest>=8.3.3",
+    "isort>=5.13.2",
     "ruff>=0.7.4",
+]
+sandbox = [
+    "ipykernel>=6.29.5",
+    "matplotlib>=3.9.2",
+    "neovim>=0.3.1",
 ]
 
 [build-system]
 requires = ["setuptools>=42"]
 build-backend = "setuptools.build_meta"
 
-[tool.setuptools.packages.find]
-where = [ "src" ]
-include = [ "faz.utils*" ]
-
 [tool.pytest.ini_options]
 addopts = "-ra -q"
 testpaths = [
     "tests",
 ]
+
+[tool.isort]
+profile = "google"
+line_length = 100
 
 [tool.ruff]
 exclude = [
