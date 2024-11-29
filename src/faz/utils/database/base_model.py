@@ -1,10 +1,12 @@
 from __future__ import annotations
 
 from decimal import Decimal
-from typing import TYPE_CHECKING, Any, Self
+from typing import Any, Self, TYPE_CHECKING
 
 from sqlalchemy.ext.asyncio import AsyncAttrs
-from sqlalchemy.orm import ColumnProperty, DeclarativeBase, class_mapper
+from sqlalchemy.orm import class_mapper
+from sqlalchemy.orm import ColumnProperty
+from sqlalchemy.orm import DeclarativeBase
 
 if TYPE_CHECKING:
     from sqlalchemy.sql.schema import Table
@@ -41,9 +43,7 @@ class BaseModel(AsyncAttrs, DeclarativeBase):
         )
 
     @classmethod
-    def get_column_attribute_names(
-        cls, *, includes_primary_key: bool = True
-    ) -> list[str]:
+    def get_column_attribute_names(cls, *, includes_primary_key: bool = True) -> list[str]:
         if cls.__column_attribute_names__ is None:
             cls.__column_attribute_names__ = [
                 p.key

@@ -2,9 +2,13 @@ from __future__ import annotations
 
 from abc import ABC
 from decimal import Decimal
-from typing import TYPE_CHECKING, Any, Iterable, Sequence
+from typing import Any, Iterable, Sequence, TYPE_CHECKING
 
-from sqlalchemy import Column, Tuple, select, text, tuple_
+from sqlalchemy import Column
+from sqlalchemy import select
+from sqlalchemy import text
+from sqlalchemy import Tuple
+from sqlalchemy import tuple_
 from sqlalchemy.dialects.mysql import insert
 
 if TYPE_CHECKING:
@@ -16,7 +20,6 @@ if TYPE_CHECKING:
 
 
 class BaseRepository[T: BaseModel, ID](ABC):
-
     def __init__(self, database: BaseMySQLDatabase, model_cls: type[T]) -> None:
         self._database = database
         self._model_cls = model_cls
@@ -83,9 +86,7 @@ class BaseRepository[T: BaseModel, ID](ABC):
             If not provided, a new session will be created.
         """
         if ignore_on_duplicate and replace_on_duplicate:
-            raise ValueError(
-                "ignore_on_duplicate and replace_on_duplicate cannot be both True"
-            )
+            raise ValueError("ignore_on_duplicate and replace_on_duplicate cannot be both True")
 
         entities = self._ensure_iterable(entity)
 
@@ -109,9 +110,7 @@ class BaseRepository[T: BaseModel, ID](ABC):
         async with self.database.must_enter_async_session(session) as session:
             await session.execute(stmt)
 
-    async def delete(
-        self, id_: ID | list[ID], *, session: AsyncSession | None = None
-    ) -> None:
+    async def delete(self, id_: ID | list[ID], *, session: AsyncSession | None = None) -> None:
         """Deletes an entry from the repository based on `id_`
 
         Parameters
@@ -128,9 +127,7 @@ class BaseRepository[T: BaseModel, ID](ABC):
         async with self.database.must_enter_async_session(session) as session:
             await session.execute(stmt)
 
-    async def delete_many(
-        self, id_: list[ID], *, session: AsyncSession | None = None
-    ) -> None:
+    async def delete_many(self, id_: list[ID], *, session: AsyncSession | None = None) -> None:
         """Deletes an entry from the repository based on `id_`
 
         Parameters
@@ -206,9 +203,7 @@ class BaseRepository[T: BaseModel, ID](ABC):
 
     def _get_primary_key(self) -> Tuple[Column[Any], ...] | Column[Any]:
         model_cls = self.model
-        primary_keys: tuple[Column[Any], ...] | Column[Any] = (
-            model_cls.__mapper__.primary_key
-        )
+        primary_keys: tuple[Column[Any], ...] | Column[Any] = model_cls.__mapper__.primary_key
 
         if not isinstance(primary_keys, tuple):  # type: ignore
             return tuple_(primary_keys)
@@ -228,7 +223,4 @@ class BaseRepository[T: BaseModel, ID](ABC):
         return ret
 
     def _to_dict(self, objs: Iterable[T]) -> list[dict[str, Any]]:
-        return [
-            {c.name: getattr(obj, c.name) for c in obj.get_table().columns}
-            for obj in objs
-        ]
+        return [{c.name: getattr(obj, c.name) for c in obj.get_table().columns} for obj in objs]

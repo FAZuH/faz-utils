@@ -4,7 +4,6 @@ from faz.utils.database.base_database import BaseDatabase
 
 
 class BaseMySQLDatabase(BaseDatabase, ABC):
-
     def __init__(
         self,
         user: str,

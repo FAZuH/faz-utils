@@ -1,16 +1,24 @@
 from __future__ import annotations
 
-from abc import ABC, abstractmethod
-from contextlib import asynccontextmanager, contextmanager
-from typing import TYPE_CHECKING, Any, AsyncGenerator, Generator
+from abc import ABC
+from abc import abstractmethod
+from contextlib import asynccontextmanager
+from contextlib import contextmanager
+from typing import Any, AsyncGenerator, Generator, TYPE_CHECKING
 
-from sqlalchemy import URL, Connection, create_engine
-from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine
-from sqlalchemy.orm import Session, sessionmaker
+from sqlalchemy import Connection
+from sqlalchemy import create_engine
+from sqlalchemy import URL
+from sqlalchemy.ext.asyncio import async_sessionmaker
+from sqlalchemy.ext.asyncio import create_async_engine
+from sqlalchemy.orm import Session
+from sqlalchemy.orm import sessionmaker
 
 if TYPE_CHECKING:
     from sqlalchemy import Engine
-    from sqlalchemy.ext.asyncio import AsyncConnection, AsyncEngine, AsyncSession
+    from sqlalchemy.ext.asyncio import AsyncConnection
+    from sqlalchemy.ext.asyncio import AsyncEngine
+    from sqlalchemy.ext.asyncio import AsyncSession
 
     from faz.utils.database.base_model import BaseModel
     from faz.utils.database.base_repository import BaseRepository
@@ -50,9 +58,7 @@ class BaseDatabase(ABC):
 
         async_url = URL.create(async_driver, user, password, host, port, database)
         url = URL.create(sync_driver, user, password, host, port, database)
-        self._async_engine = create_async_engine(
-            async_url, pool_recycle=60 * 5, pool_pre_ping=True
-        )
+        self._async_engine = create_async_engine(async_url, pool_recycle=60 * 5, pool_pre_ping=True)
         self._engine = create_engine(url, pool_recycle=60 * 5, pool_pre_ping=True)
 
         self._repositories: list[BaseRepository[Any, Any]] = []
@@ -111,9 +117,7 @@ class BaseDatabase(ABC):
                 yield conn
 
     @contextmanager
-    def must_enter_session(
-        self, session: Session | None = None
-    ) -> Generator[Session, None]:
+    def must_enter_session(self, session: Session | None = None) -> Generator[Session, None]:
         """Provide a context manager for synchronous database sessions, optionally reusing an existing session.
 
         Args:
@@ -146,9 +150,7 @@ class BaseDatabase(ABC):
             AsyncGenerator[AsyncSession, None]: Asynchronous database session.
         """
         async with self.enter_async_connection() as conn:
-            async_session = async_sessionmaker(
-                bind=conn, autoflush=False, expire_on_commit=False
-            )
+            async_session = async_sessionmaker(bind=conn, autoflush=False, expire_on_commit=False)
             async with async_session.begin() as session:
                 yield session
 
